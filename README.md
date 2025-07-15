@@ -12,8 +12,8 @@ B7s Tier Calculator
         /* Custom styles for Inter font */
         body {
             font-family: "Inter", sans-serif;
-            padding-left: 1rem; /* Add some padding to the body for max-w-full */
-            padding-right: 1rem;
+            padding-left: 0; /* Removed horizontal padding to allow full width */
+            padding-right: 0; /* Removed horizontal padding to allow full width */
         }
         /* Hide number input arrows */
         input[type='number']::-webkit-inner-spin-button,
@@ -123,7 +123,7 @@ B7s Tier Calculator
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-full">
+    <div class="bg-white py-8 px-4 rounded-xl shadow-lg w-full">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Revenue Change Calculator</h1>
 
         <div id="input-section" class="space-y-6">
@@ -382,7 +382,7 @@ B7s Tier Calculator
                 "Extra Player": { "September": 11, "October": 57, "November": 23, "December": 100, "January": 21, "February": 71, "March": 42, "April": 43, "May": 13 },
                 "VIP & Camping Upgrade": { "September": 12, "October": 85, "November": 0, "December": 31, "January": 11, "February": 13, "March": 7, "April": 19, "May": 2 },
                 "V.VIP & Glamping Upgrade": { "September": 0, "October": 30, "November": 5, "December": 3, "January": 1, "February": 31, "March": 25, "April": 30, "May": 1 },
-                "V.VIP & Deluxe Glamping Upgrade": { "September": 0, "October": 0, "November": 0, "December": 0, 'January': 0, 'February': 0, 'March': 3, 'April': 4, 'May': 3 }
+                "V.VIP & Deluxe Glamping Upgrade": { "September": 0, 'October': 0, 'November': 0, 'December': 0, 'January': 0, 'February': 0, 'March': 3, 'April': 4, 'May': 3 }
             };
 
 
@@ -621,36 +621,7 @@ B7s Tier Calculator
              * This function is now only called by the toggleDetailsBtn, which is removed.
              * However, keeping it in case future functionality needs similar toggling.
              */
-            const toggleColumns = () => {
-                const isCurrentlyHidden = toggleDetailsBtn.textContent === 'Show Details'; // Check current state
-
-                // Toggle visibility for sub-headers (LY Price, Act. Price, Tickets) in month-headers-row-2
-                const subColumnHeadersToToggle = monthHeadersRow2.querySelectorAll('[data-column-type="ly-price"], [data-column-type="act-price"], [data-column-type="tickets"]');
-                subColumnHeadersToToggle.forEach(th => th.classList.toggle('hidden'));
-
-                // Toggle visibility for data cells (LY Price, Act. Price, Tickets) in table-body
-                const dataCellsToToggle = tableBody.querySelectorAll('td[data-column-type="ly-price"], td[data-column-type="act-price"], td[data-column-type="tickets"]');
-                dataCellsToToggle.forEach(td => td.classList.toggle('hidden'));
-
-                // Toggle visibility for fill-all input cells (LY Price, Act. Price, Tickets) in fill-all-row
-                const fillAllCellsToToggle = fillAllRow.querySelectorAll('th[data-column-type="ly-price"], th[data-column-type="act-price"], th[data-column-type="tickets"]');
-                fillAllCellsToToggle.forEach(th => th.classList.toggle('hidden'));
-
-
-                // Update colspan for month headers in the main input table (month-headers-row-1)
-                const monthHeaders = monthHeadersRow1.querySelectorAll('[data-month-header]');
-                monthHeaders.forEach(th => {
-                    if (isCurrentlyHidden) { // If currently hidden, we are showing them
-                        th.setAttribute('colspan', '4');
-                    } else { // If currently visible, we are hiding them
-                        th.setAttribute('colspan', '1');
-                    }
-                });
-
-                // Update button text
-                toggleDetailsBtn.textContent = isCurrentlyHidden ? 'Hide Details' : 'Show Details';
-            };
-
+            // Removed the toggleColumns function as it's no longer needed
 
             /**
              * Calculates and displays the revenue change.
