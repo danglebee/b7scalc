@@ -12,6 +12,8 @@ B7s Tier Calculator
         /* Custom styles for Inter font */
         body {
             font-family: "Inter", sans-serif;
+            padding-left: 1rem; /* Add some padding to the body for max-w-full */
+            padding-right: 1rem;
         }
         /* Hide number input arrows */
         input[type='number']::-webkit-inner-spin-button,
@@ -61,13 +63,71 @@ B7s Tier Calculator
             font-weight: bold;
             background-color: #f0f4f8; /* A slightly darker gray for footer */
         }
+
+        /* Stronger border for month separation */
+        #main-revenue-table thead th[data-month-header],
+        #results-section table thead th[colspan="4"] {
+            border-left: 2px solid #94a3b8; /* Stronger, darker border for month headers */
+        }
+        #main-revenue-table thead th[data-month-header]:first-child,
+        #results-section table thead th[colspan="4"]:first-child {
+            border-left: none; /* No left border for the very first header */
+        }
+
+        /* Apply border to the first data cell of each month's group (Prop. Price) */
+        #main-revenue-table tbody tr td[data-column-type="prop-price"],
+        #monthly-results-body tr td:nth-child(4n+1) { /* For results table, it's the first of 4 cells */
+             border-left: 1px solid #cbd5e0; /* Lighter border for data cells */
+        }
+        #main-revenue-table tbody tr td[data-column-type="prop-price"]:first-child,
+        #monthly-results-body tr td:nth-child(1) {
+            border-left: none; /* No left border for the very first prop price cell / first result cell */
+        }
+
+        /* Apply border to the first sub-header of each month (Prop. Price) */
+        #main-revenue-table thead tr:nth-child(2) th[data-column-type="prop-price"],
+        #results-section table thead tr:nth-child(2) th:nth-child(4n+1) {
+            border-left: 2px solid #94a3b8; /* Stronger, darker border for the first sub-header of each month */
+        }
+        #main-revenue-table thead tr:nth-child(2) th[data-column-type="prop-price"]:first-child,
+        #results-section table thead tr:nth-child(2) th:first-child {
+            border-left: none; /* No left border for the very first sub-header */
+        }
+
+        /* Added borders for individual data columns within each month group */
+        #main-revenue-table tbody tr td:not([data-column-type="prop-price"]):not(.sticky-col),
+        #monthly-results-body tr td:not(:first-child):not([data-column-type="prop-price"]):not(.sticky-col) {
+            border-left: 1px solid #e2e8f0; /* Light border between sub-columns */
+        }
+        #main-revenue-table thead tr:nth-child(2) th:not([data-column-type="prop-price"]):not(:first-child),
+        #results-section table thead tr:nth-child(2) th:not(:first-child) {
+            border-left: 1px solid #e2e8f0; /* Light border between sub-headers */
+        }
+
+        /* Shading for alternate month columns */
+        .shaded-month-group {
+            background-color: #f3f4f6; /* Tailwind's bg-gray-100 */
+        }
+
+        /* Styling for the new "fill-all" input fields */
+        .fill-all-input {
+            width: 100%; /* Make it fill the header cell */
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            text-align: center;
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            border-radius: 0.25rem; /* rounded-md */
+            margin-top: 0.5rem; /* Space below the text header */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-7xl">
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-full">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Revenue Change Calculator</h1>
 
         <div id="input-section" class="space-y-6">
+            <!-- Removed the toggle-details-btn div -->
             <!-- Consolidated Table Container -->
             <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
                 <table id="main-revenue-table" class="min-w-full divide-y divide-gray-200">
@@ -78,7 +138,11 @@ B7s Tier Calculator
                             <!-- Month headers will be dynamically added here -->
                         </tr>
                         <tr id="month-headers-row-2">
-                            <!-- Sub-headers (LY Price, Prop. Price, Actual Price, Tickets) will be dynamically added here -->
+                            <!-- Sub-headers (Prop. Price, LY Price, Actual Price, Tickets) will be dynamically added here -->
+                        </tr>
+                        <tr id="fill-all-row">
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky-col sticky-col-header">Fill All:</th>
+                            <!-- Fill-all inputs will be dynamically added here -->
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-200" id="table-body">
@@ -114,48 +178,48 @@ B7s Tier Calculator
                         </tr>
                         <tr>
                             <!-- Sub-headers for each month -->
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
 
-                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
                             <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
                         </tr>
@@ -212,10 +276,12 @@ B7s Tier Calculator
             const mainRevenueTable = document.getElementById('main-revenue-table');
             const monthHeadersRow1 = document.getElementById('month-headers-row-1');
             const monthHeadersRow2 = document.getElementById('month-headers-row-2');
+            const fillAllRow = document.getElementById('fill-all-row'); // New row for fill-all inputs
             const tableBody = document.getElementById('table-body');
             const calculateBtn = document.getElementById('calculate-btn');
             const resultsSection = document.getElementById('results-section');
             const errorMessageDiv = document.getElementById('error-message');
+            // Removed the toggleDetailsBtn constant
 
             // New result display elements
             const monthlyResultsBody = document.getElementById('monthly-results-body');
@@ -316,7 +382,7 @@ B7s Tier Calculator
                 "Extra Player": { "September": 11, "October": 57, "November": 23, "December": 100, "January": 21, "February": 71, "March": 42, "April": 43, "May": 13 },
                 "VIP & Camping Upgrade": { "September": 12, "October": 85, "November": 0, "December": 31, "January": 11, "February": 13, "March": 7, "April": 19, "May": 2 },
                 "V.VIP & Glamping Upgrade": { "September": 0, "October": 30, "November": 5, "December": 3, "January": 1, "February": 31, "March": 25, "April": 30, "May": 1 },
-                "V.VIP & Deluxe Glamping Upgrade": { "September": 0, "October": 0, "November": 0, "December": 0, "January": 0, "February": 0, "March": 3, "April": 4, "May": 3 }
+                "V.VIP & Deluxe Glamping Upgrade": { "September": 0, "October": 0, "November": 0, "December": 0, 'January': 0, 'February': 0, 'March': 3, 'April': 4, 'May': 3 }
             };
 
 
@@ -395,25 +461,78 @@ B7s Tier Calculator
                 // Clear existing content
                 monthHeadersRow1.innerHTML = `<th rowspan="2" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky-col sticky-col-header">Variant</th>`;
                 monthHeadersRow2.innerHTML = ``; // This row starts empty after the variant header is set in row1
+                fillAllRow.innerHTML = `<th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky-col sticky-col-header">Fill All:</th>`; // Clear fill-all row
                 tableBody.innerHTML = '';
 
                 // Add month headers (first row)
-                monthNames.forEach(month => {
+                monthNames.forEach((month, index) => {
                     const th = document.createElement('th');
-                    th.setAttribute('colspan', '4'); // Each month has 4 sub-columns
-                    th.className = 'px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-l border-gray-200';
+                    // Set colspan to 1 as only Prop. Price is visible by default
+                    th.setAttribute('colspan', '1');
+                    th.classList.add('px-3', 'py-2', 'text-center', 'text-xs', 'font-medium', 'text-gray-500', 'uppercase', 'tracking-wider', 'border-l', 'border-gray-200');
+                    if (index % 2 === 0) { // Apply shading to September, November, January, etc.
+                        th.classList.add('shaded-month-group');
+                    }
                     th.textContent = month;
+                    th.setAttribute('data-month-header', month); // Add data attribute to easily select month headers
                     monthHeadersRow1.appendChild(th);
+                });
 
-                    // Add sub-headers (second row)
-                    const subHeaders = ['LY Price', 'Prop. Price', 'Act. Price', 'Tickets'];
-                    subHeaders.forEach(subHeader => {
+                // Add sub-headers (second row) - ORDERED Prop. Price, LY Price, Act. Price, Tickets
+                const subHeaderTypes = ['prop-price', 'ly-price', 'act-price', 'tickets'];
+                const subHeaderTexts = {
+                    'prop-price': 'Prop. Price',
+                    'ly-price': 'LY Price',
+                    'act-price': 'Act. Price',
+                    'tickets': 'Tickets'
+                };
+
+                monthNames.forEach((month, monthIndex) => {
+                    subHeaderTypes.forEach(type => {
                         const subTh = document.createElement('th');
-                        subTh.className = 'px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
-                        subTh.textContent = subHeader;
+                        subTh.classList.add('px-3', 'py-2', 'text-left', 'text-xs', 'font-medium', 'text-gray-500', 'uppercase', 'tracking-wider');
+                        if (type !== 'prop-price') { // Hide all except 'prop-price' by default
+                            subTh.classList.add('hidden');
+                        }
+                        if (monthIndex % 2 === 0) { // Apply shading to September, November, January, etc.
+                            subTh.classList.add('shaded-month-group');
+                        }
+                        subTh.textContent = subHeaderTexts[type];
+                        subTh.setAttribute('data-column-type', type);
+                        subTh.setAttribute('data-month', month); // Add month to sub-header for specific toggling
                         monthHeadersRow2.appendChild(subTh);
                     });
                 });
+
+                // Add fill-all input fields for each sub-column
+                monthNames.forEach((month, index) => {
+                    subHeaderTypes.forEach(type => {
+                        const fillAllSubCell = document.createElement('th');
+                        fillAllSubCell.classList.add('px-3', 'py-2', 'text-left', 'text-xs', 'font-medium', 'text-gray-500', 'uppercase', 'tracking-wider');
+
+                        if (index % 2 === 0) {
+                            fillAllSubCell.classList.add('shaded-month-group');
+                        }
+                        if (type !== 'prop-price') { // Hide all except 'prop-price' by default
+                            fillAllSubCell.classList.add('hidden');
+                        }
+
+                        if (type === 'prop-price') {
+                            const propPriceFillAllInput = document.createElement('input');
+                            propPriceFillAllInput.type = 'number';
+                            propPriceFillAllInput.classList.add('fill-all-input');
+                            propPriceFillAllInput.placeholder = 'Fill all...';
+                            propPriceFillAllInput.min = '0';
+                            propPriceFillAllInput.step = '0.01';
+                            propPriceFillAllInput.setAttribute('data-fill-month', month);
+                            fillAllSubCell.appendChild(propPriceFillAllInput);
+                        } else {
+                            fillAllSubCell.innerHTML = `&nbsp;`; // Use non-breaking space to maintain cell height
+                        }
+                        fillAllRow.appendChild(fillAllSubCell);
+                    });
+                });
+
 
                 // Populate table body with variant rows using the FILTERED allVariants
                 allVariants.forEach(variantName => {
@@ -426,41 +545,112 @@ B7s Tier Calculator
                     variantNameCell.textContent = variantName;
                     row.appendChild(variantNameCell);
 
-                    // Add cells for each month
-                    monthNames.forEach(month => {
+                    // Add cells for each month (ORDERED Prop. Price, LY Price, Act. Price, Tickets)
+                    monthNames.forEach((month, monthIndex) => {
                         const variantDataForMonth = previousYearData[month] ? previousYearData[month].find(v => v.variant === variantName) : null;
                         const lastYearPrice = variantDataForMonth ? variantDataForMonth.lastYearPrice : 0;
                         const actualPriceThisYear = variantDataForMonth ? variantDataForMonth.actualPriceThisYear : 0;
                         const ticketsSold = variantDataForMonth ? variantDataForMonth.ticketsSold : 0;
 
-
-                        // Last Year Price (readonly)
-                        const lyPriceCell = document.createElement('td');
-                        lyPriceCell.className = 'px-3 py-2 whitespace-nowrap';
-                        lyPriceCell.innerHTML = `<input type="number" class="variant-input ly-price-input" value="${lastYearPrice.toFixed(2)}" readonly min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
-                        row.appendChild(lyPriceCell);
-
-                        // Proposed Price This Year (editable, placeholder based on LY price)
+                        // Proposed Price This Year (editable) - FIRST
                         const propPriceCell = document.createElement('td');
-                        propPriceCell.className = 'px-3 py-2 whitespace-nowrap';
-                        propPriceCell.innerHTML = `<input type="number" class="variant-input prop-price-input" placeholder="e.g., ${lastYearPrice > 0 ? (lastYearPrice * 1.1).toFixed(2) : '0.00'}" min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
+                        propPriceCell.classList.add('px-3', 'py-2', 'whitespace-nowrap');
+                        if (monthIndex % 2 === 0) {
+                            propPriceCell.classList.add('shaded-month-group');
+                        }
+                        // Removed placeholder attribute
+                        propPriceCell.innerHTML = `<input type="number" class="variant-input prop-price-input" min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
+                        propPriceCell.setAttribute('data-column-type', 'prop-price');
                         row.appendChild(propPriceCell);
 
-                        // Actual Price This Year (hardcoded and readonly)
+                        // Last Year Price (readonly) - SECOND, HIDDEN BY DEFAULT
+                        const lyPriceCell = document.createElement('td');
+                        lyPriceCell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'hidden'); // Hidden by default
+                        if (monthIndex % 2 === 0) {
+                            lyPriceCell.classList.add('shaded-month-group');
+                        }
+                        lyPriceCell.innerHTML = `<input type="number" class="variant-input ly-price-input" value="${lastYearPrice.toFixed(2)}" readonly min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
+                        lyPriceCell.setAttribute('data-column-type', 'ly-price');
+                        row.appendChild(lyPriceCell);
+
+                        // Actual Price This Year (hardcoded and readonly) - THIRD, HIDDEN BY DEFAULT
                         const actPriceCell = document.createElement('td');
-                        actPriceCell.className = 'px-3 py-2 whitespace-nowrap';
+                        actPriceCell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'hidden'); // Hidden by default
+                        if (monthIndex % 2 === 0) {
+                            actPriceCell.classList.add('shaded-month-group');
+                        }
                         actPriceCell.innerHTML = `<input type="number" class="variant-input actual-price-input" value="${actualPriceThisYear.toFixed(2)}" readonly min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
+                        actPriceCell.setAttribute('data-column-type', 'act-price');
                         row.appendChild(actPriceCell);
 
-                        // Tickets Sold (hardcoded and readonly)
+                        // Tickets Sold (hardcoded and readonly) - FOURTH, HIDDEN BY DEFAULT
                         const ticketsSoldCell = document.createElement('td');
-                        ticketsSoldCell.className = 'px-3 py-2 whitespace-nowrap';
+                        ticketsSoldCell.classList.add('px-3', 'py-2', 'whitespace-nowrap', 'hidden'); // Hidden by default
+                        if (monthIndex % 2 === 0) {
+                            ticketsSoldCell.classList.add('shaded-month-group');
+                        }
                         ticketsSoldCell.innerHTML = `<input type="number" class="variant-input tickets-sold-input" value="${ticketsSold}" readonly min="0" step="1" data-variant="${variantName}" data-month="${month}">`;
+                        ticketsSoldCell.setAttribute('data-column-type', 'tickets');
                         row.appendChild(ticketsSoldCell);
                     });
                     tableBody.appendChild(row);
                 });
+
+                // Add event listeners to the new fill-all inputs
+                fillAllRow.querySelectorAll('.fill-all-input').forEach(input => {
+                    input.addEventListener('input', (event) => {
+                        const monthToFill = event.target.dataset.fillMonth;
+                        const valueToFill = event.target.value;
+
+                        // Select all 'prop-price-input' fields for the specific month
+                        // and filter them to only include sports variants
+                        const monthSpecificPropPriceInputs = tableBody.querySelectorAll(`.prop-price-input[data-month="${monthToFill}"]`);
+
+                        monthSpecificPropPriceInputs.forEach(propInput => {
+                            const variantName = propInput.dataset.variant;
+                            if (individualSports.includes(variantName)) { // Only fill for sports variants
+                                propInput.value = valueToFill;
+                            }
+                        });
+                    });
+                });
             };
+
+            /**
+             * Toggles the visibility of LY Price, Actual Price, and Tickets columns, and adjusts fill-all inputs.
+             * This function is now only called by the toggleDetailsBtn, which is removed.
+             * However, keeping it in case future functionality needs similar toggling.
+             */
+            const toggleColumns = () => {
+                const isCurrentlyHidden = toggleDetailsBtn.textContent === 'Show Details'; // Check current state
+
+                // Toggle visibility for sub-headers (LY Price, Act. Price, Tickets) in month-headers-row-2
+                const subColumnHeadersToToggle = monthHeadersRow2.querySelectorAll('[data-column-type="ly-price"], [data-column-type="act-price"], [data-column-type="tickets"]');
+                subColumnHeadersToToggle.forEach(th => th.classList.toggle('hidden'));
+
+                // Toggle visibility for data cells (LY Price, Act. Price, Tickets) in table-body
+                const dataCellsToToggle = tableBody.querySelectorAll('td[data-column-type="ly-price"], td[data-column-type="act-price"], td[data-column-type="tickets"]');
+                dataCellsToToggle.forEach(td => td.classList.toggle('hidden'));
+
+                // Toggle visibility for fill-all input cells (LY Price, Act. Price, Tickets) in fill-all-row
+                const fillAllCellsToToggle = fillAllRow.querySelectorAll('th[data-column-type="ly-price"], th[data-column-type="act-price"], th[data-column-type="tickets"]');
+                fillAllCellsToToggle.forEach(th => th.classList.toggle('hidden'));
+
+
+                // Update colspan for month headers in the main input table (month-headers-row-1)
+                const monthHeaders = monthHeadersRow1.querySelectorAll('[data-month-header]');
+                monthHeaders.forEach(th => {
+                    if (isCurrentlyHidden) { // If currently hidden, we are showing them
+                        th.setAttribute('colspan', '4');
+                    } else { // If currently visible, we are hiding them
+                        th.setAttribute('colspan', '1');
+                    }
+                });
+
+                // Update button text
+                toggleDetailsBtn.textContent = isCurrentlyHidden ? 'Hide Details' : 'Show Details';
+            };
+
 
             /**
              * Calculates and displays the revenue change.
@@ -504,19 +694,22 @@ B7s Tier Calculator
 
                     if (!currentRow) {
                         console.error(`Input row not found for variant: ${variantName}`);
+                        hasError = true; // Set error flag
+                        errorMessageDiv.textContent = `Internal error: Input row not found for variant: ${variantName}.`;
+                        errorMessageDiv.classList.remove('hidden');
                         return; // Skip this variant if its input row isn't found
                     }
 
                     // Iterate over each month's inputs within this variant's row
-                    monthNames.forEach(month => {
-                        // Select inputs for the current variant and month
-                        const lyPriceInput = currentRow.querySelector(`.ly-price-input[data-variant="${variantName}"][data-month="${month}"]`);
+                    monthNames.forEach((month, monthIndex) => {
+                        // Select inputs for the current variant and month (order matches input table)
                         const propPriceInput = currentRow.querySelector(`.prop-price-input[data-variant="${variantName}"][data-month="${month}"]`);
+                        const lyPriceInput = currentRow.querySelector(`.ly-price-input[data-variant="${variantName}"][data-month="${month}"]`);
                         const actualPriceInput = currentRow.querySelector(`.actual-price-input[data-variant="${variantName}"][data-month="${month}"]`);
                         const ticketsSoldInput = currentRow.querySelector(`.tickets-sold-input[data-variant="${variantName}"][data-month="${month}"]`);
 
                         // Check if inputs exist (they should if table is correctly rendered)
-                        if (!lyPriceInput || !propPriceInput || !actualPriceInput || !ticketsSoldInput) {
+                        if (!propPriceInput || !lyPriceInput || !actualPriceInput || !ticketsSoldInput) {
                             console.error(`Missing inputs for ${variantName} in ${month}`);
                             hasError = true;
                             errorMessageDiv.textContent = `Internal error: Missing data for ${variantName} in ${month}.`;
@@ -525,6 +718,7 @@ B7s Tier Calculator
                         }
 
                         const lastYearPrice = parseFloat(lyPriceInput.value);
+                        // Use proposedPriceInput.value directly for proposedPriceThisYear
                         const proposedPriceThisYear = parseFloat(propPriceInput.value);
                         const actualPriceThisYear = parseFloat(actualPriceInput.value);
                         const ticketsSold = parseInt(ticketsSoldInput.value);
@@ -553,12 +747,12 @@ B7s Tier Calculator
                         productPropTotal += monthlyPropRevenue;
                         productActTotal += monthlyActRevenue;
 
-                        // Add cells to the monthly breakdown row
+                        // Add cells to the monthly breakdown row (ORDERED PROP, LY, ACT, DIFF)
                         monthlyTableRow.innerHTML += `
-                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">£${monthlyLyRevenue.toFixed(2)}</td>
-                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">£${monthlyPropRevenue.toFixed(2)}</td>
-                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">£${monthlyActRevenue.toFixed(2)}</td>
-                            <td class="px-3 py-2 whitespace-nowrap text-sm ${monthlyDiffActLy > 0 ? 'text-green-600' : (monthlyDiffActLy < 0 ? 'text-red-600' : '')}">£${monthlyDiffActLy.toFixed(2)}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700 ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${monthlyPropRevenue.toFixed(2)}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700 ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${monthlyLyRevenue.toFixed(2)}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700 ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${monthlyActRevenue.toFixed(2)}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm ${monthlyDiffActLy > 0 ? 'text-green-600' : (monthlyDiffActLy < 0 ? 'text-red-600' : '')} ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${monthlyDiffActLy.toFixed(2)}</td>
                         `;
                     });
 
@@ -595,17 +789,20 @@ B7s Tier Calculator
 
                 // Populate monthly totals row in the footer of the monthly breakdown table
                 const monthlyTotalsFooterRow = document.querySelector('#monthly-results-body').nextElementSibling.querySelector('tr');
-                monthNames.forEach(month => {
+                // Clear previous monthly totals to prevent duplication on recalculate
+                monthlyTotalsFooterRow.innerHTML = `<td class="px-3 py-2 text-sm font-semibold text-gray-900 sticky-col">Monthly Totals</td>`;
+
+                monthNames.forEach((month, monthIndex) => {
                     const ly = monthlyTotals[month].ly;
                     const prop = monthlyTotals[month].prop;
                     const act = monthlyTotals[month].act;
                     const diffActLy = act - ly;
 
                     monthlyTotalsFooterRow.innerHTML += `
-                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900">£${ly.toFixed(2)}</td>
-                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900">£${prop.toFixed(2)}</td>
-                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900">£${act.toFixed(2)}</td>
-                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold ${diffActLy > 0 ? 'text-green-600' : (diffActLy < 0 ? 'text-red-600' : '')}">£${diffActLy.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900 ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${prop.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900 ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${ly.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900 ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${act.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold ${diffActLy > 0 ? 'text-green-600' : (diffActLy < 0 ? 'text-red-600' : '')} ${monthIndex % 2 === 0 ? 'shaded-month-group' : ''}">£${diffActLy.toFixed(2)}</td>
                     `;
                 });
 
@@ -655,6 +852,7 @@ B7s Tier Calculator
 
             // Event Listeners
             calculateBtn.addEventListener('click', calculateRevenueChange);
+            // Removed the event listener for toggleDetailsBtn
 
             // Initialize the table on page load
             initializeTable();
