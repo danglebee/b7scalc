@@ -44,6 +44,21 @@
             background-color: #f9fafb; /* bg-gray-50 */
             z-index: 20; /* Higher z-index for header sticky */
         }
+        /* Styling for result tables */
+        #results-section table th, #results-section table td {
+            padding: 0.5rem 0.75rem;
+            text-align: right; /* Align numbers to the right */
+        }
+        #results-section table th:first-child, #results-section table td:first-child {
+            text-align: left; /* Align variant names to the left */
+        }
+        #results-section table thead th {
+            background-color: #e2e8f0; /* bg-gray-200 */
+        }
+        #results-section table tfoot td {
+            font-weight: bold;
+            background-color: #f0f4f8; /* A slightly darker gray for footer */
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
@@ -64,7 +79,7 @@
                             <!-- Sub-headers (LY Price, Prop. Price, Actual Price, Tickets) will be dynamically added here -->
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="table-body">
+                    <tbody class="bg-white divide-y divide-200" id="table-body">
                         <!-- Variant rows will be dynamically added here -->
                     </tbody>
                 </table>
@@ -77,12 +92,113 @@
 
         <!-- Results Section -->
         <div id="results-section" class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200 hidden">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Calculation Results</h2>
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Detailed Revenue Analysis</h2>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-3 text-center">Monthly Revenue Breakdown</h3>
+            <div class="overflow-x-auto mb-6 rounded-xl border border-gray-200 shadow-sm">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th rowspan="2" class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider sticky-col sticky-col-header">Variant</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">September</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">October</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">November</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">December</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">January</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">February</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">March</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">April</th>
+                            <th colspan="4" class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider border-l border-gray-200">May</th>
+                        </tr>
+                        <tr>
+                            <!-- Sub-headers for each month -->
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">LY</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Prop</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Act</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Diff (Act-LY)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthly-results-body" class="bg-white divide-y divide-gray-200">
+                        <!-- Detailed monthly results per variant -->
+                    </tbody>
+                    <tfoot class="bg-gray-100">
+                        <tr>
+                            <td class="px-3 py-2 text-sm font-semibold text-gray-900 sticky-col">Monthly Totals</td>
+                            <!-- Monthly totals will be dynamically added here -->
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-3 text-center">Product Grand Totals</h3>
+            <div class="overflow-x-auto mb-6 rounded-xl border border-gray-200 shadow-sm">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Variant</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Total LY Revenue</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Total Proposed Revenue</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Total Actual Revenue</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Change (Prop vs LY)</th>
+                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">Change (Act vs LY)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-grand-totals-body" class="bg-white divide-y divide-gray-200">
+                        <!-- Grand totals per variant -->
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-3 text-center">Overall Grand Totals</h3>
             <div class="space-y-3 text-lg text-gray-700">
-                <p><strong>Total Revenue Last Year:</strong> <span id="last-year-revenue" class="font-bold text-blue-600">$0.00</span></p>
-                <p><strong>Total Proposed Revenue This Year:</strong> <span id="this-year-revenue" class="font-bold text-purple-600">$0.00</span></p>
-                <p><strong>Absolute Revenue Change:</strong> <span id="revenue-change-abs" class="font-bold text-gray-800">$0.00</span></p>
-                <p><strong>Percentage Revenue Change:</strong> <span id="revenue-change-percent" class="font-bold text-gray-800">0.00%</span></p>
+                <p><strong>Total Revenue Last Year (All Products):</strong> <span id="grand-ly-revenue" class="font-bold text-blue-600">£0.00</span></p>
+                <p><strong>Total Proposed Revenue This Year (All Products):</strong> <span id="grand-prop-revenue" class="font-bold text-purple-600">£0.00</span></p>
+                <p><strong>Total Actual Revenue This Year (All Products):</strong> <span id="grand-act-revenue" class="font-bold text-green-600">£0.00</span></p>
+                <p><strong>Overall Absolute Change (Proposed vs LY):</strong> <span id="grand-change-prop-abs" class="font-bold text-gray-800">£0.00</span></p>
+                <p><strong>Overall Percentage Change (Proposed vs LY):</strong> <span id="grand-change-prop-percent" class="font-bold text-gray-800">0.00%</span></p>
+                <p><strong>Overall Absolute Change (Actual vs LY):</strong> <span id="grand-change-act-abs" class="font-bold text-gray-800">£0.00</span></p>
+                <p><strong>Overall Percentage Change (Actual vs LY):</strong> <span id="grand-change-act-percent" class="font-bold text-gray-800">0.00%</span></p>
             </div>
             <div id="error-message" class="mt-4 text-red-600 font-medium text-center hidden"></div>
         </div>
@@ -97,127 +213,178 @@
             const tableBody = document.getElementById('table-body');
             const calculateBtn = document.getElementById('calculate-btn');
             const resultsSection = document.getElementById('results-section');
-            const lastYearRevenueSpan = document.getElementById('last-year-revenue');
-            const thisYearRevenueSpan = document.getElementById('this-year-revenue');
-            const revenueChangeAbsSpan = document.getElementById('revenue-change-abs');
-            const revenueChangePercentSpan = document.getElementById('revenue-change-percent');
             const errorMessageDiv = document.getElementById('error-message');
+
+            // New result display elements
+            const monthlyResultsBody = document.getElementById('monthly-results-body');
+            const productGrandTotalsBody = document.getElementById('product-grand-totals-body');
+            const grandLyRevenueSpan = document.getElementById('grand-ly-revenue');
+            const grandPropRevenueSpan = document.getElementById('grand-prop-revenue');
+            const grandActRevenueSpan = document.getElementById('grand-act-revenue');
+            const grandChangePropAbsSpan = document.getElementById('grand-change-prop-abs');
+            const grandChangePropPercentSpan = document.getElementById('grand-change-prop-percent');
+            const grandChangeActAbsSpan = document.getElementById('grand-change-act-abs');
+            const grandChangeActPercentSpan = document.getElementById('grand-change-act-percent');
+
 
             // Array of month names from September to May
             const monthNames = ['September', 'October', 'November', 'December', 'January', 'February', 'March', 'April', 'May'];
 
-            // Pre-defined list of all variants
-            const allVariants = [
+            // Pre-defined list of all variants (before filtering)
+            const allVariantsRaw = [
                 'BASKETBALL', 'DODGEBALL', 'FITNESS GAMES', 'HOCKEY', 'NETBALL', 'RUGBY',
-                'TOUCH RUGBY', "WOMEN'S FOOTBALL", 'Camping Upgrade', 'Extra Player',
+                'TOUCH RUGBY', "WOMEN'S FOOTBALL",
+                'Camping Upgrade', 'Extra Player',
                 'V.VIP & Deluxe Glamping Package', 'V.VIP & Deluxe Glamping Upgrade',
                 'V.VIP & Glamping Package', 'V.VIP & Glamping Upgrade', 'V.VIP Upgrade',
                 'VIP & Camping Upgrade', 'VIP Upgrade'
             ];
 
-            // Sample data for previous year, structured by month and then by variant.
-            // This data is parsed directly from your input.
-            const previousYearData = {
-                'September': [
-                    { variant: 'BASKETBALL', lastYearPrice: 65 }, { variant: 'DODGEBALL', lastYearPrice: 68 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 68 }, { variant: 'HOCKEY', lastYearPrice: 65 },
-                    { variant: 'NETBALL', lastYearPrice: 62 }, { variant: 'RUGBY', lastYearPrice: 61 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 71 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 0 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 102 }, { variant: 'Extra Player', lastYearPrice: 69 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 0 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 250 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 252 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 28 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 127 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 31 }
-                ],
-                'October': [
-                    { variant: 'BASKETBALL', lastYearPrice: 70 }, { variant: 'DODGEBALL', lastYearPrice: 70 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 70 }, { variant: 'HOCKEY', lastYearPrice: 70 },
-                    { variant: 'NETBALL', lastYearPrice: 67 }, { variant: 'RUGBY', lastYearPrice: 56 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 0 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 50 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 102 }, { variant: 'Extra Player', lastYearPrice: 70 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 0 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 260 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 263 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 44 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 111 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 40 }
-                ],
-                'November': [
-                    { variant: 'BASKETBALL', lastYearPrice: 85 }, { variant: 'DODGEBALL', lastYearPrice: 70 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 70 }, { variant: 'HOCKEY', lastYearPrice: 0 },
-                    { variant: 'NETBALL', lastYearPrice: 85 }, { variant: 'RUGBY', lastYearPrice: 62 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 0 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 75 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 79 }, { variant: 'Extra Player', lastYearPrice: 36 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 0 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 275 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 275 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 70 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 65 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 40 }
-                ],
-                'December': [
-                    { variant: 'BASKETBALL', lastYearPrice: 85 }, { variant: 'DODGEBALL', lastYearPrice: 62 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 85 }, { variant: 'HOCKEY', lastYearPrice: 85 },
-                    { variant: 'NETBALL', lastYearPrice: 82 }, { variant: 'RUGBY', lastYearPrice: 82 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 85 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 85 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 77 }, { variant: 'Extra Player', lastYearPrice: 80 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 0 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 275 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 275 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 54 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 91 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 40 }
-                ],
-                'January': [
-                    { variant: 'BASKETBALL', lastYearPrice: 0 }, { variant: 'DODGEBALL', lastYearPrice: 79 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 79 }, { variant: 'HOCKEY', lastYearPrice: 96 },
-                    { variant: 'NETBALL', lastYearPrice: 93 }, { variant: 'RUGBY', lastYearPrice: 72 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 0 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 95 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 98 }, { variant: 'Extra Player', lastYearPrice: 95 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 350 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 0 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 266 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 293 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 70 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 123 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 0 }
-                ],
-                'February': [
-                    { variant: 'BASKETBALL', lastYearPrice: 99 }, { variant: 'DODGEBALL', lastYearPrice: 66 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 71 }, { variant: 'HOCKEY', lastYearPrice: 83 },
-                    { variant: 'NETBALL', lastYearPrice: 99 }, { variant: 'RUGBY', lastYearPrice: 69 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 65 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 84 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 106 }, { variant: 'Extra Player', lastYearPrice: 87 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 0 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 246 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 269 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 49 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 101 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 43 }
-                ],
-                'March': [
-                    { variant: 'BASKETBALL', lastYearPrice: 99 }, { variant: 'DODGEBALL', lastYearPrice: 99 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 50 }, { variant: 'HOCKEY', lastYearPrice: 0 },
-                    { variant: 'NETBALL', lastYearPrice: 61 }, { variant: 'RUGBY', lastYearPrice: 77 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 0 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 0 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 123 }, { variant: 'Extra Player', lastYearPrice: 95 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 360 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 268 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 64 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 155 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 21 }
-                ],
-                'April': [
-                    { variant: 'BASKETBALL', lastYearPrice: 80 }, { variant: 'DODGEBALL', lastYearPrice: 99 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 81 }, { variant: 'HOCKEY', lastYearPrice: 0 },
-                    { variant: 'NETBALL', lastYearPrice: 58 }, { variant: 'RUGBY', lastYearPrice: 30 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 0 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 0 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 74 }, { variant: 'Extra Player', lastYearPrice: 90 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 360 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 256 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 33 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 138 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 41 }
-                ],
-                'May': [
-                    { variant: 'BASKETBALL', lastYearPrice: 0 }, { variant: 'DODGEBALL', lastYearPrice: 0 },
-                    { variant: 'FITNESS GAMES', lastYearPrice: 65 }, { variant: 'HOCKEY', lastYearPrice: 0 },
-                    { variant: 'NETBALL', lastYearPrice: 0 }, { variant: 'RUGBY', lastYearPrice: 0 },
-                    { variant: 'TOUCH RUGBY', lastYearPrice: 0 }, { variant: "WOMEN'S FOOTBALL", lastYearPrice: 0 },
-                    { variant: 'Camping Upgrade', lastYearPrice: 138 }, { variant: 'Extra Player', lastYearPrice: 82 },
-                    { variant: 'V.VIP & Deluxe Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Deluxe Glamping Upgrade', lastYearPrice: 360 },
-                    { variant: 'V.VIP & Glamping Package', lastYearPrice: 0 }, { variant: 'V.VIP & Glamping Upgrade', lastYearPrice: 300 },
-                    { variant: 'V.VIP Upgrade', lastYearPrice: 51 }, { variant: 'VIP & Camping Upgrade', lastYearPrice: 190 },
-                    { variant: 'VIP Upgrade', lastYearPrice: 14 }
-                ]
+            // List of individual sports that fall under the "All Sports" category
+            const individualSports = [
+                'BASKETBALL', 'DODGEBALL', 'FITNESS GAMES', 'HOCKEY', 'NETBALL', 'RUGBY',
+                'TOUCH RUGBY', "WOMEN'S FOOTBALL"
+            ];
+
+            // Data provided by the user for "Last Year Prices", mapped to a more usable structure
+            const userProvidedLastYearPrices = {
+                'All Sports Category': { // This represents the group of individual sports
+                    'September': 70, 'October': 70,
+                    'November': 85, 'December': 85,
+                    'January': 99, 'February': 99,
+                    'March': 99, 'April': 99, 'May': 0 // Assuming May is 0 for All Sports based on previous data
+                },
+                'V.VIP & Glamping Upgrade': {
+                    'September': 260, 'October': 260, 'November': 275, 'December': 275,
+                    'January': 290, 'February': 290, 'March': 300, 'April': 300, 'May': 0
+                },
+                'VIP & Camping Upgrade': {
+                    'September': 140, 'October': 140, 'November': 155, 'December': 155,
+                    'January': 175, 'February': 175, 'March': 190, 'April': 190, 'May': 0
+                },
+                'Camping Upgrade': {
+                    'September': 110, 'October': 110, 'November': 125, 'December': 125,
+                    'January': 145, 'February': 145, 'March': 155, 'April': 155, 'May': 0
+                },
+                'VIP Upgrade': {
+                    'September': 40, 'October': 40, 'November': 0, 'December': 0, // Explicitly 0 for '-'
+                    'January': 50, 'February': 50, 'March': 0, 'April': 0, 'May': 0 // Explicitly 0 for '-'
+                },
+                'V.VIP Upgrade': {
+                    'September': 60, 'October': 60, 'November': 0, 'December': 0, // Explicitly 0 for '-'
+                    'January': 70, 'February': 70, 'March': 0, 'April': 0, 'May': 0 // Explicitly 0 for '-'
+                }
             };
+
+            // Data provided by the user for "Actual Prices This Year"
+            const userProvidedActualPrices = {
+                'BASKETBALL': { 'September': 65, 'October': 70, 'November': 85, 'December': 85, 'January': 0, 'February': 99, 'March': 99, 'April': 98, 'May': 0 },
+                'DODGEBALL': { 'September': 68, 'October': 70, 'November': 70, 'December': 62, 'January': 79, 'February': 66, 'March': 99, 'April': 99, 'May': 0 },
+                'FITNESS GAMES': { 'September': 68, 'October': 70, 'November': 70, 'December': 85, 'January': 79, 'February': 71, 'March': 50, 'April': 81, 'May': 65 },
+                'HOCKEY': { 'September': 65, 'October': 70, 'November': 0, 'December': 85, 'January': 96, 'February': 83, 'March': 0, 'April': 0, 'May': 0 },
+                'NETBALL': { 'September': 62, 'October': 67, 'November': 85, 'December': 82, 'January': 93, 'February': 99, 'March': 61, 'April': 58, 'May': 0 },
+                'RUGBY': { 'September': 61, 'October': 56, 'November': 62, 'December': 82, 'January': 72, 'February': 69, 'March': 77, 'April': 30, 'May': 0 },
+                'TOUCH RUGBY': { 'September': 71, 'October': 0, 'November': 0, 'December': 85, 'January': 0, 'February': 65, 'March': 0, 'April': 0, 'May': 0 },
+                "WOMEN'S FOOTBALL": { 'September': 0, 'October': 50, 'November': 75, 'December': 85, 'January': 95, 'February': 84, 'March': 0, 'April': 0, 'May': 0 },
+                'Camping Upgrade': { 'September': 102, 'October': 102, 'November': 79, 'December': 77, 'January': 98, 'February': 106, 'March': 123, 'April': 74, 'May': 138 },
+                'Extra Player': { 'September': 69, 'October': 70, 'November': 36, 'December': 80, 'January': 95, 'February': 87, 'March': 95, 'April': 90, 'May': 82 },
+                'V.VIP & Deluxe Glamping Package': { 'September': 0, 'October': 0, 'November': 0, 'December': 0, 'January': 350, 'February': 0, 'March': 0, 'April': 0, 'May': 0 },
+                'V.VIP & Deluxe Glamping Upgrade': { 'September': 0, 'October': 0, 'November': 0, 'December': 0, 'January': 0, 'February': 0, 'March': 360, 'April': 360, 'May': 360 },
+                'V.VIP & Glamping Package': { 'September': 250, 'October': 260, 'November': 275, 'December': 275, 'January': 266, 'February': 246, 'March': 0, 'April': 0, 'May': 0 },
+                'V.VIP & Glamping Upgrade': { 'September': 252, 'October': 263, 'November': 275, 'December': 275, 'January': 293, 'February': 269, 'March': 268, 'April': 256, 'May': 300 },
+                'V.VIP Upgrade': { 'September': 28, 'October': 44, 'November': 70, 'December': 54, 'January': 70, 'February': 49, 'March': 64, 'April': 33, 'May': 51 },
+                'VIP & Camping Upgrade': { 'September': 127, 'October': 111, 'November': 65, 'December': 91, 'January': 123, 'February': 101, 'March': 155, 'April': 138, 'May': 190 },
+                'VIP Upgrade': { 'September': 31, 'October': 40, 'November': 40, 'December': 40, 'January': 0, 'February': 43, 'March': 21, 'April': 41, 'May': 14 }
+            };
+
+            // Data provided by the user for "Tickets Sold" - MERGED DATA
+            const userProvidedTicketsSold = {
+                "RUGBY": { "September": 31, "October": 30, "November": 39, "December": 20, "January": 16, "February": 24, "March": 52, "April": 11, "May": 10 },
+                "NETBALL": { "September": 23, "October": 30, "November": 20, "December": 30, "January": 66, "February": 11, "March": 30, "April": 12, "May": 0 },
+                "DODGEBALL": { "September": 65, "October": 75, "November": 12, "December": 17, "January": 64, "February": 88, "March": 21, "April": 0, "May": 0 },
+                "HOCKEY": { "September": 93, "October": 41, "November": 0, "December": 24, "January": 50, "February": 64, "March": 0, "April": 79, "May": 10 },
+                "FITNESS GAMES": { "September": 0, "October": 0, "November": 0, "December": 11, "January": 0, "February": 0, "March": 0, "April": 0, "May": 0 },
+                "BASKETBALL": { "September": 20, "October": 16, "November": 4, "December": 13, "January": 0, "February": 44, "March": 0, "April": 0, "May": 0 },
+                "TOUCH RUGBY": { "September": 0, "October": 0, "November": 0, "December": 0, "January": 0, "February": 0, "March": 0, "April": 0, "May": 0 },
+                "WOMEN'S FOOTBALL": { "September": 0, "October": 0, "November": 0, "December": 0, "January": 0, "February": 0, "March": 0, "April": 1, "May": 0 },
+                "V.VIP & Glamping Package": { "September": 30, "October": 40, "November": 0, "December": 0, "January": 0, "February": 0, "March": 0, "April": 0, "May": 0 },
+                "V.VIP Upgrade": { "September": 41, "October": 14, "November": 11, "December": 10, "January": 1, "February": 37, "March": 23, "April": 17, "May": 15 },
+                "Camping Upgrade": { "September": 82, "October": 90, "November": 24, "December": 92, "January": 50, "February": 30, "March": 15, "April": 43, "May": 6 },
+                "VIP Upgrade": { "September": 34, "October": 0, "November": 29, "December": 1, "January": 14, "February": 37, "March": 63, "April": 30, "May": 30 },
+                "Extra Player": { "September": 11, "October": 57, "November": 23, "December": 100, "January": 21, "February": 71, "March": 42, "April": 43, "May": 13 },
+                "VIP & Camping Upgrade": { "September": 12, "October": 85, "November": 0, "December": 31, "January": 11, "February": 13, "March": 7, "April": 19, "May": 2 },
+                "V.VIP & Glamping Upgrade": { "September": 0, "October": 30, "November": 5, "December": 3, "January": 1, "February": 31, "March": 25, "April": 30, "May": 1 },
+                "V.VIP & Deluxe Glamping Upgrade": { "September": 0, "October": 0, "November": 0, "December": 0, "January": 0, "February": 0, "March": 3, "April": 4, "May": 3 }
+            };
+
+
+            // Initialize previousYearData with all variants and months, defaulting to 0 for all prices and tickets
+            const previousYearData = {};
+            monthNames.forEach(month => {
+                previousYearData[month] = [];
+                allVariantsRaw.forEach(variant => {
+                    previousYearData[month].push({ variant: variant, lastYearPrice: 0, actualPriceThisYear: 0, ticketsSold: 0 }); // Default all to 0
+                });
+            });
+
+            // Overlay the user-provided Last Year Prices onto the initialized structure
+            for (const categoryOrVariant in userProvidedLastYearPrices) {
+                if (categoryOrVariant === 'All Sports Category') {
+                    for (const month in userProvidedLastYearPrices[categoryOrVariant]) {
+                        const price = userProvidedLastYearPrices[categoryOrVariant][month];
+                        individualSports.forEach(sportVariant => {
+                            const monthEntry = previousYearData[month].find(item => item.variant === sportVariant);
+                            if (monthEntry) {
+                                monthEntry.lastYearPrice = price;
+                            }
+                        });
+                    }
+                } else {
+                    for (const month in userProvidedLastYearPrices[categoryOrVariant]) {
+                        const price = userProvidedLastYearPrices[categoryOrVariant][month];
+                        const monthEntry = previousYearData[month].find(item => item.variant === categoryOrVariant);
+                        if (monthEntry) {
+                            monthEntry.lastYearPrice = price;
+                        }
+                    }
+                }
+            }
+
+            // Overlay the user-provided Actual Prices onto the initialized structure
+            for (const variantName in userProvidedActualPrices) {
+                for (const month in userProvidedActualPrices[variantName]) {
+                    const price = userProvidedActualPrices[variantName][month];
+                    const monthEntry = previousYearData[month].find(item => item.variant === variantName);
+                    if (monthEntry) {
+                        monthEntry.actualPriceThisYear = price;
+                    }
+                }
+            }
+
+            // Overlay the user-provided Tickets Sold onto the initialized structure
+            for (const variantName in userProvidedTicketsSold) {
+                for (const month in userProvidedTicketsSold[variantName]) {
+                    const tickets = userProvidedTicketsSold[variantName][month];
+                    const monthEntry = previousYearData[month].find(item => item.variant === variantName);
+                    if (monthEntry) {
+                        monthEntry.ticketsSold = tickets;
+                    }
+                }
+            }
+
+            // Filter allVariantsRaw to only include those with at least one non-zero lastYearPrice
+            const allVariants = allVariantsRaw.filter(variantName => {
+                let hasNonZeroPrice = false;
+                for (const month of monthNames) {
+                    const variantDataForMonth = previousYearData[month].find(v => v.variant === variantName);
+                    if (variantDataForMonth && variantDataForMonth.lastYearPrice > 0) {
+                        hasNonZeroPrice = true;
+                        break;
+                    }
+                }
+                return hasNonZeroPrice;
+            });
+
 
             /**
              * Initializes the main revenue table with headers and variant rows.
@@ -246,7 +413,7 @@
                     });
                 });
 
-                // Populate table body with variant rows
+                // Populate table body with variant rows using the FILTERED allVariants
                 allVariants.forEach(variantName => {
                     const row = document.createElement('tr');
                     row.className = 'hover:bg-gray-50';
@@ -261,6 +428,9 @@
                     monthNames.forEach(month => {
                         const variantDataForMonth = previousYearData[month] ? previousYearData[month].find(v => v.variant === variantName) : null;
                         const lastYearPrice = variantDataForMonth ? variantDataForMonth.lastYearPrice : 0;
+                        const actualPriceThisYear = variantDataForMonth ? variantDataForMonth.actualPriceThisYear : 0;
+                        const ticketsSold = variantDataForMonth ? variantDataForMonth.ticketsSold : 0;
+
 
                         // Last Year Price (readonly)
                         const lyPriceCell = document.createElement('td');
@@ -268,22 +438,22 @@
                         lyPriceCell.innerHTML = `<input type="number" class="variant-input ly-price-input" value="${lastYearPrice.toFixed(2)}" readonly min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
                         row.appendChild(lyPriceCell);
 
-                        // Proposed Price This Year
+                        // Proposed Price This Year (editable, placeholder based on LY price)
                         const propPriceCell = document.createElement('td');
                         propPriceCell.className = 'px-3 py-2 whitespace-nowrap';
                         propPriceCell.innerHTML = `<input type="number" class="variant-input prop-price-input" placeholder="e.g., ${lastYearPrice > 0 ? (lastYearPrice * 1.1).toFixed(2) : '0.00'}" min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
                         row.appendChild(propPriceCell);
 
-                        // Actual Price This Year
+                        // Actual Price This Year (hardcoded and readonly)
                         const actPriceCell = document.createElement('td');
                         actPriceCell.className = 'px-3 py-2 whitespace-nowrap';
-                        actPriceCell.innerHTML = `<input type="number" class="variant-input actual-price-input" placeholder="e.g., ${lastYearPrice > 0 ? (lastYearPrice * 1.05).toFixed(2) : '0.00'}" min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
+                        actPriceCell.innerHTML = `<input type="number" class="variant-input actual-price-input" value="${actualPriceThisYear.toFixed(2)}" readonly min="0" step="0.01" data-variant="${variantName}" data-month="${month}">`;
                         row.appendChild(actPriceCell);
 
-                        // Tickets Sold
+                        // Tickets Sold (hardcoded and readonly)
                         const ticketsSoldCell = document.createElement('td');
                         ticketsSoldCell.className = 'px-3 py-2 whitespace-nowrap';
-                        ticketsSoldCell.innerHTML = `<input type="number" class="variant-input tickets-sold-input" placeholder="e.g., 0" min="0" step="1" data-variant="${variantName}" data-month="${month}">`;
+                        ticketsSoldCell.innerHTML = `<input type="number" class="variant-input tickets-sold-input" value="${ticketsSold}" readonly min="0" step="1" data-variant="${variantName}" data-month="${month}">`;
                         row.appendChild(ticketsSoldCell);
                     });
                     tableBody.appendChild(row);
@@ -294,37 +464,57 @@
              * Calculates and displays the revenue change.
              */
             const calculateRevenueChange = () => {
-                let totalLastYearRevenue = 0;
-                let totalThisYearRevenue = 0;
+                let totalLastYearRevenueOverall = 0;
+                let totalProposedRevenueOverall = 0;
+                let totalActualRevenueOverall = 0;
                 let hasError = false;
                 errorMessageDiv.classList.add('hidden'); // Hide previous errors
 
-                // Iterate over each variant row
-                allVariants.forEach(variantName => {
-                    // Find the row for this variant
-                    const row = tableBody.querySelector(`tr:has(td.sticky-col[data-variant="${variantName}"])`); // This selector might need refinement if data-variant is not on sticky-col
+                // Clear previous results
+                monthlyResultsBody.innerHTML = '';
+                productGrandTotalsBody.innerHTML = '';
 
-                    // A more robust way to find the row:
+                let monthlyTotals = {}; // { 'September': { ly: 0, prop: 0, act: 0 }, ... }
+                monthNames.forEach(month => {
+                    monthlyTotals[month] = { ly: 0, prop: 0, act: 0 };
+                });
+
+                // Iterate over each variant row
+                allVariants.forEach(variantName => { // Use the FILTERED allVariants
+                    let productLyTotal = 0;
+                    let productPropTotal = 0;
+                    let productActTotal = 0;
+
+                    // Create a row for the monthly breakdown table
+                    const monthlyTableRow = document.createElement('tr');
+                    monthlyTableRow.className = 'hover:bg-gray-50';
+                    monthlyTableRow.innerHTML = `<td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900 sticky-col">${variantName}</td>`;
+
+                    // Find the row for this variant in the input table
                     let currentRow = null;
-                    const allRows = tableBody.querySelectorAll('tr');
-                    for (const r of allRows) {
+                    const allInputRows = tableBody.querySelectorAll('tr');
+                    for (const r of allInputRows) {
                         if (r.querySelector('td.sticky-col').textContent === variantName) {
                             currentRow = r;
                             break;
                         }
                     }
 
-                    if (!currentRow) return; // Should not happen if allVariants match rows
+                    if (!currentRow) {
+                        console.error(`Input row not found for variant: ${variantName}`);
+                        return; // Skip this variant if its input row isn't found
+                    }
 
                     // Iterate over each month's inputs within this variant's row
                     monthNames.forEach(month => {
                         // Select inputs for the current variant and month
                         const lyPriceInput = currentRow.querySelector(`.ly-price-input[data-variant="${variantName}"][data-month="${month}"]`);
+                        const propPriceInput = currentRow.querySelector(`.prop-price-input[data-variant="${variantName}"][data-month="${month}"]`);
                         const actualPriceInput = currentRow.querySelector(`.actual-price-input[data-variant="${variantName}"][data-month="${month}"]`);
                         const ticketsSoldInput = currentRow.querySelector(`.tickets-sold-input[data-variant="${variantName}"][data-month="${month}"]`);
 
                         // Check if inputs exist (they should if table is correctly rendered)
-                        if (!lyPriceInput || !actualPriceInput || !ticketsSoldInput) {
+                        if (!lyPriceInput || !propPriceInput || !actualPriceInput || !ticketsSoldInput) {
                             console.error(`Missing inputs for ${variantName} in ${month}`);
                             hasError = true;
                             errorMessageDiv.textContent = `Internal error: Missing data for ${variantName} in ${month}.`;
@@ -333,25 +523,67 @@
                         }
 
                         const lastYearPrice = parseFloat(lyPriceInput.value);
+                        const proposedPriceThisYear = parseFloat(propPriceInput.value);
                         const actualPriceThisYear = parseFloat(actualPriceInput.value);
                         const ticketsSold = parseInt(ticketsSoldInput.value);
 
                         // Validate inputs
-                        if (isNaN(lastYearPrice) || isNaN(actualPriceThisYear) || isNaN(ticketsSold) ||
-                            lastYearPrice < 0 || actualPriceThisYear < 0 || ticketsSold < 0) {
+                        if (isNaN(lastYearPrice) || isNaN(proposedPriceThisYear) || isNaN(actualPriceThisYear) || isNaN(ticketsSold) ||
+                            lastYearPrice < 0 || proposedPriceThisYear < 0 || actualPriceThisYear < 0 || ticketsSold < 0) {
                             hasError = true;
                             errorMessageDiv.textContent = `Please enter valid positive numbers for all fields for "${variantName}" in "${month}".`;
                             errorMessageDiv.classList.remove('hidden');
                             return; // Exit inner loop if error found
                         }
 
-                        totalLastYearRevenue += lastYearPrice * ticketsSold;
-                        totalThisYearRevenue += actualPriceThisYear * ticketsSold;
+                        const monthlyLyRevenue = lastYearPrice * ticketsSold;
+                        const monthlyPropRevenue = proposedPriceThisYear * ticketsSold;
+                        const monthlyActRevenue = actualPriceThisYear * ticketsSold;
+                        const monthlyDiffActLy = monthlyActRevenue - monthlyLyRevenue;
+
+                        // Accumulate monthly totals
+                        monthlyTotals[month].ly += monthlyLyRevenue;
+                        monthlyTotals[month].prop += monthlyPropRevenue;
+                        monthlyTotals[month].act += monthlyActRevenue;
+
+                        // Accumulate product totals
+                        productLyTotal += monthlyLyRevenue;
+                        productPropTotal += monthlyPropRevenue;
+                        productActTotal += monthlyActRevenue;
+
+                        // Add cells to the monthly breakdown row
+                        monthlyTableRow.innerHTML += `
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">£${monthlyLyRevenue.toFixed(2)}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">£${monthlyPropRevenue.toFixed(2)}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-700">£${monthlyActRevenue.toFixed(2)}</td>
+                            <td class="px-3 py-2 whitespace-nowrap text-sm ${monthlyDiffActLy > 0 ? 'text-green-600' : (monthlyDiffActLy < 0 ? 'text-red-600' : '')}">£${monthlyDiffActLy.toFixed(2)}</td>
+                        `;
                     });
 
                     if (hasError) {
                         return; // Exit outer loop if error found
                     }
+                    monthlyResultsBody.appendChild(monthlyTableRow);
+
+                    // Add row to product grand totals table
+                    const productGrandRow = document.createElement('tr');
+                    const productChangePropLy = productPropTotal - productLyTotal;
+                    const productChangeActLy = productActTotal - productLyTotal;
+
+                    productGrandRow.innerHTML = `
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-900">${variantName}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm text-blue-600 font-bold">£${productLyTotal.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm text-purple-600 font-bold">£${productPropTotal.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm text-green-600 font-bold">£${productActTotal.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm ${productChangePropLy > 0 ? 'text-green-600' : (productChangePropLy < 0 ? 'text-red-600' : '')}">£${productChangePropLy.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm ${productChangeActLy > 0 ? 'text-green-600' : (productChangeActLy < 0 ? 'text-red-600' : '')}">£${productChangeActLy.toFixed(2)}</td>
+                    `;
+                    productGrandTotalsBody.appendChild(productGrandRow);
+
+                    // Accumulate overall grand totals
+                    totalLastYearRevenueOverall += productLyTotal;
+                    totalProposedRevenueOverall += productPropTotal;
+                    totalActualRevenueOverall += productActTotal;
                 });
 
                 if (hasError) {
@@ -359,32 +591,61 @@
                     return; // Stop if there was an input error
                 }
 
-                const absoluteChange = totalThisYearRevenue - totalLastYearRevenue;
-                let percentageChange = 0;
-                if (totalLastYearRevenue !== 0) {
-                    percentageChange = (absoluteChange / totalLastYearRevenue) * 100;
-                } else if (totalThisYearRevenue > 0) {
-                    percentageChange = Infinity; // If last year was 0 but this year is > 0, it's an infinite increase
+                // Populate monthly totals row in the footer of the monthly breakdown table
+                const monthlyTotalsFooterRow = document.querySelector('#monthly-results-body').nextElementSibling.querySelector('tr');
+                monthNames.forEach(month => {
+                    const ly = monthlyTotals[month].ly;
+                    const prop = monthlyTotals[month].prop;
+                    const act = monthlyTotals[month].act;
+                    const diffActLy = act - ly;
+
+                    monthlyTotalsFooterRow.innerHTML += `
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900">£${ly.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900">£${prop.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-gray-900">£${act.toFixed(2)}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold ${diffActLy > 0 ? 'text-green-600' : (diffActLy < 0 ? 'text-red-600' : '')}">£${diffActLy.toFixed(2)}</td>
+                    `;
+                });
+
+
+                // Calculate overall percentage changes
+                const overallChangePropAbs = totalProposedRevenueOverall - totalLastYearRevenueOverall;
+                let overallChangePropPercent = 0;
+                if (totalLastYearRevenueOverall !== 0) {
+                    overallChangePropPercent = (overallChangePropAbs / totalLastYearRevenueOverall) * 100;
+                } else if (totalProposedRevenueOverall > 0) {
+                    overallChangePropPercent = Infinity;
                 }
 
-                // Display results
-                lastYearRevenueSpan.textContent = `$${totalLastYearRevenue.toFixed(2)}`;
-                thisYearRevenueSpan.textContent = `$${totalThisYearRevenue.toFixed(2)}`;
-                revenueChangeAbsSpan.textContent = `$${absoluteChange.toFixed(2)}`;
+                const overallChangeActAbs = totalActualRevenueOverall - totalLastYearRevenueOverall;
+                let overallChangeActPercent = 0;
+                if (totalLastYearRevenueOverall !== 0) {
+                    overallChangeActPercent = (overallChangeActAbs / totalLastYearRevenueOverall) * 100;
+                } else if (totalActualRevenueOverall > 0) {
+                    overallChangeActPercent = Infinity;
+                }
 
-                if (percentageChange === Infinity) {
-                    revenueChangePercentSpan.textContent = 'Infinite Increase';
-                    revenueChangePercentSpan.className = 'font-bold text-green-600'; // Highlight infinite increase
+                // Display overall grand totals
+                grandLyRevenueSpan.textContent = `£${totalLastYearRevenueOverall.toFixed(2)}`;
+                grandPropRevenueSpan.textContent = `£${totalProposedRevenueOverall.toFixed(2)}`;
+                grandActRevenueSpan.textContent = `£${totalActualRevenueOverall.toFixed(2)}`;
+
+                grandChangePropAbsSpan.textContent = `£${overallChangePropAbs.toFixed(2)}`;
+                if (overallChangePropPercent === Infinity) {
+                    grandChangePropPercentSpan.textContent = 'Infinite Increase';
+                    grandChangePropPercentSpan.className = 'font-bold text-green-600';
                 } else {
-                    revenueChangePercentSpan.textContent = `${percentageChange.toFixed(2)}%`;
-                    // Apply color based on change
-                    if (percentageChange > 0) {
-                        revenueChangePercentSpan.className = 'font-bold text-green-600';
-                    } else if (percentageChange < 0) {
-                        revenueChangePercentSpan.className = 'font-bold text-red-600';
-                    } else {
-                        revenueChangePercentSpan.className = 'font-bold text-gray-800';
-                    }
+                    grandChangePropPercentSpan.textContent = `${overallChangePropPercent.toFixed(2)}%`;
+                    grandChangePropPercentSpan.className = `font-bold ${overallChangePropPercent > 0 ? 'text-green-600' : (overallChangePropPercent < 0 ? 'text-red-600' : 'text-gray-800')}`;
+                }
+
+                grandChangeActAbsSpan.textContent = `£${overallChangeActAbs.toFixed(2)}`;
+                if (overallChangeActPercent === Infinity) {
+                    grandChangeActPercentSpan.textContent = 'Infinite Increase';
+                    grandChangeActPercentSpan.className = 'font-bold text-green-600';
+                } else {
+                    grandChangeActPercentSpan.textContent = `${overallChangeActPercent.toFixed(2)}%`;
+                    grandChangeActPercentSpan.className = `font-bold ${overallChangeActPercent > 0 ? 'text-green-600' : (overallChangeActPercent < 0 ? 'text-red-600' : 'text-gray-800')}`;
                 }
 
                 resultsSection.classList.remove('hidden'); // Show results section
@@ -399,4 +660,3 @@
     </script>
 </body>
 </html>
-
